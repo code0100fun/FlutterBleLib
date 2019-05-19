@@ -15,7 +15,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  convert: "^2.0.1"
+  convert: "^2.1.1"
   protobuf: '^0.13.11'
 
 
