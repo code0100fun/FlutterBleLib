@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:simple_permissions/simple_permissions.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:flutter_ble_lib_example/ui/ble_connected_device_screen.dart';
@@ -154,11 +156,19 @@ class BleDevicesState extends State<BleDevicesScreen> {
   @override
   initState() {
     super.initState();
+    askForLocationPermission();
     _bluetoothStateSub = FlutterBleLib.instance.onStateChange()
         .listen((bluetoothState) =>
         setState(() => this._bluetoothState = bluetoothState));
     FlutterBleLib.instance.state().then((bluetoothState) =>
         setState(() => this._bluetoothState = bluetoothState));
+  }
+
+  askForLocationPermission() async {
+    bool result = await SimplePermissions.checkPermission(Permission.AccessCoarseLocation);
+    if (!result) {
+      await SimplePermissions.requestPermission(Permission.AccessCoarseLocation);
+    }
   }
 
   @override
